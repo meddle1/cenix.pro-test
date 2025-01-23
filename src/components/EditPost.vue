@@ -3,15 +3,15 @@ import useVuelidate from '@vuelidate/core'
 import { minLength, required } from '@vuelidate/validators'
 import { v4 } from 'uuid'
 import { computed } from 'vue'
-import { Post } from '@/stores/app'
+import type { Post } from '@/types/post'
 
 interface PropTypes {
   post?: Post | null
 }
 
 const props = withDefaults(defineProps<PropTypes>(), {
-  post: { id: '', name: '' },
-} as PropTypes)
+  post: () => ({ id: '', name: '' }),
+})
 
 const emit = defineEmits<{
   (e: 'close'): void

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Post, useAppStore } from '@/stores/app'
+import { useAppStore } from '@/stores/app'
+import type { Post } from '@/types/post'
 
 import EditPost from '@/components/EditPost.vue'
 import SearchPosts from '@/components/SearchPosts.vue'
@@ -9,7 +10,7 @@ const router = useRouter()
 
 const isEditingPost = ref(false)
 
-const post = ref<Post | null>(null)
+const post = ref<Post | null | undefined>(null)
 
 const addPost = () => {
   post.value = null
@@ -62,7 +63,7 @@ watch([() => appStore.q, () => appStore.pageIndex], () => {
         <v-list v-if="!appStore.isMutating">
           <v-list-item
             v-for="post in appStore.currentPage"
-            :key="post"
+            :key="post.id"
             :title="post.name"
             @click="editPost(post.id)"
           >

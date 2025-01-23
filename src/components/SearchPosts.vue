@@ -4,7 +4,7 @@ import { useAppStore } from '@/stores/app'
 const appStore = useAppStore()
 
 const q = ref('')
-let timerId
+let timerId: number
 
 const debouncedSearch = () => {
   clearTimeout(timerId)

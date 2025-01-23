@@ -38,15 +38,15 @@ export const useAppStore = defineStore('app', {
   }),
 
   getters: {
-    posts(state) {
+    posts(state): Post[] {
       return !!state.q
         ? this.items.filter((post) => post.name.includes(state.q))
         : this.items
     },
-    pagesCount() {
+    pagesCount(): number {
       return Math.ceil(this.posts.length / PostsPerPage)
     },
-    currentPage(state) {
+    currentPage(state): Post[] {
       const start = (state.pageIndex - 1) * PostsPerPage
       const end = start + PostsPerPage
 
@@ -119,9 +119,12 @@ export const useAppStore = defineStore('app', {
     init() {
       const route = useRoute()
 
+      const q = (route.query?.q as string) || ''
+      const pageIndex = parseInt(route.query?.page as string) || 1
+
       this.$patch({
-        q: route.query?.q || '',
-        pageIndex: parseInt(route.query?.page) || 1,
+        q,
+        pageIndex,
       })
 
       this.isMutating = false
